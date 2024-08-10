@@ -1,0 +1,41 @@
+project: default
+test-name: example-name
+
+services:
+  microservice:
+    image: af
+    service_name: af
+    ports:
+      - "8009:8009"
+      - "8010:8010"
+    mem_limit: 512m
+    cpus: 0.1
+  prometheus:
+    local: true
+  grafana:
+    dashboard_config_file: /dashboard_config
+
+tests:
+  default/http.gradual_ramp_up:
+    path:
+    url:
+    request_type:
+    body:
+    duration:
+    total_request:
+  
+  default/http.spike_load:
+    path:
+    url:
+    request_type:
+    body:
+    duration:
+    total_request:
+
+  default/http.sustained_high_load:
+    path:
+      url:
+      request_type:
+      body:
+      duration:
+      total_request:
