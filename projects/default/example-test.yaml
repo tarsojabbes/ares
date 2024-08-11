@@ -10,32 +10,28 @@ services:
       - "8010:8010"
     mem_limit: 512m
     cpus: 0.1
-  prometheus:
-    local: true
-  grafana:
-    dashboard_config_file: /dashboard_config
 
 tests:
   default/http.gradual_ramp_up:
-    path:
-    url:
-    request_type:
-    body:
-    duration:
-    total_request:
+    path: "./tests/default/http.gradualRampUp.js"
+    url: "https://test.com"
+    request_type: "post"
+    body: "{}"
+    duration: 60
+    total_requests: 25000
   
   default/http.spike_load:
-    path:
-    url:
+    path: "./tests/default/http.spikeLoad.js"
+    url: 
     request_type:
     body:
     duration:
-    total_request:
+    total_requests:
 
   default/http.sustained_high_load:
     path:
-      url:
-      request_type:
-      body:
-      duration:
-      total_request:
+    url:
+    request_type:
+    body:
+    duration:
+    total_requests:

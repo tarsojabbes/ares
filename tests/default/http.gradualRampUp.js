@@ -1,11 +1,11 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 
-const totalRequests = 25000
-const durationInSeconds = 60
+const totalRequests = {{ares_config.total_requests}}
+const durationInSeconds = {{ares_config.duration}}
 const requestsPerSecond = totalRequests/durationInSeconds
-const url = ""
-const body = ""
+const url = "{{ares_config.url}}"
+const body = "{{ares_config.body}}"
 
 export const options = {
   stages: [
@@ -19,7 +19,7 @@ export const options = {
 }
 
 export default function() {
-  const res = http.post(url, body);
+  const res = http.{{ares_config.request_type}}(url, body);
   check(res, {'status was 200': (r) => r.status == 200});
   sleep(1 / requestsPerSecond);
 }
