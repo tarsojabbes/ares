@@ -48,7 +48,11 @@ make create-test-directory <project_name>
 make create-test-file <project_name> <protocol>.<test_name>.js
 ```
 
-This will create a basic template for a k6 test that you can edit. As a good practice, we recommend that you prepend your test name with the protocol you're using (HTTP or gRPC).
+This will create a basic template for a k6 test that you can edit. The created file will not be the test itself to be executed, rather it's a template that will be used and parsed to generate the real test. This is because we offer engineers the option to declare in a YAML file what will be the test parameters.
+
+For example, if you access `tests/default/http.gradualRampUp.js` you'll see that the file is not a common Javascript file, once it has `{{ares_config.<parameter>}}` all over the test code. The values for these parameters are set in a corresponding YAML file that describe the test, in this case, `projects/default/example-test.yaml`, under `tests.default/http.gradual_ramp_up`.
+
+As a good practice, we recommend that you prepend your test name with the protocol you're using (HTTP or gRPC).
 
 ## Executing tests
 
@@ -59,3 +63,7 @@ Each test execution is defined by an YAML configuration file, where you declare 
 ```sh
 make run-test <project_name> <test_name.yaml>
 ```
+
+Running your tests mean that we parse your YAML file to a `docker-compose.yaml` that gets your microservice up and running, and we also create a folder `projects/<project>/generated_tests` that will contain all tests generated with the values you informed in your test declaration file.
+
+You can check this under `projects/default/generated_tests` and look for `http.gradualRampUp.generated.js` and `http.spikeLoad.generated.js`. Now, these are the tests we will perform!
