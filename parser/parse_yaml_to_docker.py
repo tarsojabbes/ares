@@ -1,4 +1,5 @@
 import yaml
+import argparse
 
 def map_service_config(service_name, service_info):
     config = {
@@ -15,26 +16,35 @@ def map_service_config(service_name, service_info):
     }
     return {service_name: {key: value for key, value in config.items() if value is not None}}
 
-with open('../projects/default/example-test.yaml', 'r') as file:
-    config = yaml.safe_load(file)
+def main(input_file, output_file):
+    with open(input_file, 'r') as file:
+        config = yaml.safe_load(file)
 
-compose_data = {
-    'version': '3',
-    'services': {}
-}
+    compose_data = {
+        'version': '3',
+        'services': {}
+    }
 
-for service_name, service_info in config.get('services', {}).items():
-    if service_name == 'microservice':
-        compose_data['services'].update(map_service_config(service_name, service_info))
+    for service_name, service_info in config.get('services', {}).items():
+        if service_name == 'microservice':
+            compose_data['services'].update(map_service_config(service_name, service_info))
 
-volumes = config.get('volumes', [])
-networks = config.get('networks', [])
+    volumes = config.get('volumes', [])
+    networks = config.get('networks', [])
 
-if volumes:
-    compose_data['volumes'] = {vol: {} for vol in volumes}
+    if volumes:
+        compose_data['volumes'] = {vol: {} for vol in volumes}
 
-if networks:
-    compose_data['networks'] = {net: {} for net in networks}
+    if networks:
+        compose_data['networks'] = {net: {} for net in networks}
 
-with open('../projects/default/docker-compose.yml', 'w') as file:
-    yaml.dump(compose_data, file, default_flow_style=False)
+    with open(output_file, 'w') as file:
+        yaml.dump(compose_data, file, default_flow_style=False)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Generate a Docker Compose file from a YAML configuration.")
+    parser.add_argument('input_file', type=str, help="Path to the input YAML configuration file.")
+    parser.add_argument('output_file', type=str, help="Path where the output docker-compose.yml will be saved.")
+
+    args = parser.parse_args()
+    main(args.input_file, args.output_file)
