@@ -1,17 +1,6 @@
 version: "3.0"
 
 services:
-  {}:
-    image: {}
-    container_name: {}
-    hostname: {}
-    ports:
-      - {}
-    networks:
-      - telemetry
-    mem_limit: {}
-    cpus: {}
-  
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.49.1
     container_name: cadvisor

@@ -61,9 +61,9 @@ Each test execution is defined by an YAML configuration file, where you declare 
 1. Run your test file
 
 ```sh
-make run-test <project_name> <test_name.yaml>
+make run-test PROJECT=<project_name> TEST_FILE=<test_name.yaml>
 ```
 
-Running your tests mean that we parse your YAML file to a `docker-compose.yaml` that gets your microservice up and running, and we also create a folder `projects/<project>/generated_tests` that will contain all tests generated with the values you informed in your test declaration file.
+Running your tests mean that we parse your YAML file to a `docker-compose.yaml` that gets your microservice up and running, and we also create a folder `projects/<project_name>/generated_tests/<test_file>` that will contain all tests generated with the values you informed in your test declaration file.
 
-You can check this under `projects/default/generated_tests` and look for `http.gradualRampUp.generated.js` and `http.spikeLoad.generated.js`. Now, these are the tests we will perform!
+You can check this under `projects/default/generated_tests/example-test` and look for `http.gradualRampUp.generated.js` and `http.spikeLoad.generated.js`. Now, these are the tests we will perform!

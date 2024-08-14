@@ -1,0 +1,13 @@
+services:
+  microservice:
+    cpus: 0.1
+    depends_on: []
+    deploy: {}
+    environment: {}
+    image: network-device-api
+    mem_limit: 512m
+    networks: []
+    ports: []
+    restart: 'no'
+    volumes: []
+version: '3'

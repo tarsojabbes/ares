@@ -14,8 +14,9 @@ def main(yaml_file, base_directory):
     
     project_name = config.get('project', 'default')
 
-    output_directory = os.path.join(base_directory, 'generated_tests')
-    
+    test_file_base = os.path.splitext(os.path.basename(yaml_file))[0]
+
+    output_directory = os.path.join(base_directory, 'generated_tests', test_file_base)
     os.makedirs(output_directory, exist_ok=True)
     
     for test_name, test_params in config.get('tests', {}).items():

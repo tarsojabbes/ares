@@ -29,3 +29,37 @@ create-test-file: ## Creates a test file in the specified project directory
 
 %:
 	@:
+
+.PHONY: run-test
+run-test: ## Run a test defined by a specified YAML file
+	@if [ "$(PROJECT)" = "" ] || [ "$(TEST_FILE)" = "" ]; then \
+		echo "Usage: make run-test PROJECT=<project_name> TEST_FILE=<test_name.yaml>"; \
+		exit 1; \
+	fi
+	echo "Running test for project: $(PROJECT) with test file: $(TEST_FILE)"; \
+	\
+	# Generate docker-compose.yml
+	python3 ./parser/parse_yaml_to_docker.py ./projects/$(PROJECT)/$(TEST_FILE) ./projects/$(PROJECT)/docker-compose.yml; \
+	\
+	# Generate test files
+	python3 ./parser/parse_yaml_to_test.py ./projects/$(PROJECT)/$(TEST_FILE) ./projects/$(PROJECT)/; \
+	\
+	# Run docker-compose
+	docker compose -f ./projects/$(PROJECT)/docker-compose.yml up -d; \
+	\
+	TEST_FILES="./projects/$(PROJECT)/generated_tests/$(basename $(TEST_FILE))/*.generated.js"; \
+	for test_file in $$TEST_FILES; do \
+		if [ ! -f $$test_file ]; then \
+			echo "No test files found in ./projects/$(PROJECT)/generated_tests/$(basename $(TEST_FILE))/"; \
+			exit 1; \
+		fi; \
+		echo "Running test: $$test_file"; \
+		k6 run $$test_file; \
+	done; \
+	\
+	# Shut down docker-compose services
+	docker compose -f ./projects/$(PROJECT)/docker-compose.yml down
+
+# Capture arguments passed to run-test
+run-test-%:
+	@$(MAKE) run-test PROJECT=$(word 2,$(MAKECMDGOALS)) TEST_FILE=$(word 3,$(MAKECMDGOALS))

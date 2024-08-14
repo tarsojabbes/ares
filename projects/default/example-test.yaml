@@ -3,11 +3,8 @@ test-name: example-name
 
 services:
   microservice:
-    image: af
-    service_name: af
-    ports:
-      - "8009:8009"
-      - "8010:8010"
+    image: network-device-api
+    service_name: network-device-api
     mem_limit: 512m
     cpus: 0.1
 
