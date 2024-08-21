@@ -54,6 +54,18 @@ For example, if you access `tests/default/http.gradualRampUp.js` you'll see that
 
 As a good practice, we recommend that you prepend your test name with the protocol you're using (HTTP or gRPC).
 
+## Starting Ares
+
+As said above, Ares is built on top of Open Source tools that are designed to collect, aggregate and display data. So, for you to visualize your microservice behavior, you need to get this infrastructure up and running, by simply running:
+
+```sh
+make ares start
+```
+
+### Stopping Ares
+
+To stop all services, do: `make ares stop`
+
 ## Executing tests
 
 Each test execution is defined by an YAML configuration file, where you declare what tests will be executed and other possible options. You can find an example at `projects/default/example-test.yaml`
