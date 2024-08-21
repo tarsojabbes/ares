@@ -4,7 +4,7 @@ test-name: example-name
 services:
   microservice:
     image: network-device-api
-    service_name: network-device-api
+    container_name: network-device-api
     mem_limit: 512m
     cpus: 0.1
 

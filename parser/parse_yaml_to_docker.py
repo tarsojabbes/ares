@@ -12,7 +12,8 @@ def map_service_config(service_name, service_info):
         'networks': service_info.get('networks', []),
         'depends_on': service_info.get('depends_on', []),
         'deploy': service_info.get('deploy', {}),
-        'restart': service_info.get('restart', 'no')
+        'restart': service_info.get('restart', 'no'),
+        'container_name': service_info.get('container_name')
     }
     return {service_name: {key: value for key, value in config.items() if value is not None}}
 
