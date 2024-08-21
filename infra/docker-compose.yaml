@@ -16,7 +16,7 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - telemetry
+      - ares-telemetry
   
   prometheus:
     image: prom/prometheus
@@ -28,7 +28,7 @@ services:
     ports:
       - "9090:9090"
     networks:
-      - telemetry
+      - ares-telemetry
 
   grafana:
     image: grafana/grafana-enterprise
@@ -36,10 +36,15 @@ services:
     hostname: grafana
     volumes:
       - grafana-storage:/var/lib/grafana
+      - ./grafana/datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
       - "3000:3000"
     networks:
-      - telemetry
+      - ares-telemetry
 
 
 volumes:
@@ -47,5 +52,5 @@ volumes:
   grafana-storage:
 
 networks:
-  telemetry:
-    name: telemetry
+  ares-telemetry:
+    name: ares-telemetry

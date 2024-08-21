@@ -63,3 +63,11 @@ run-test: ## Run a test defined by a specified YAML file
 # Capture arguments passed to run-test
 run-test-%:
 	@$(MAKE) run-test PROJECT=$(word 2,$(MAKECMDGOALS)) TEST_FILE=$(word 3,$(MAKECMDGOALS))
+
+.PHONY: ares start
+ares start: ## Start the infrastructure tools for Ares
+	docker compose -f./infra/docker-compose.yaml up -d
+
+.PHONY: ares stop
+ares stop: ## Stop the infrastructure tools for Ares
+	docker compose -f./infra/docker-compose.yaml down
