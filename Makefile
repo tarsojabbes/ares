@@ -44,6 +44,9 @@ run-test: ## Run a test defined by a specified YAML file
 	# Generate test files
 	python3 ./parser/parse_yaml_to_test.py ./projects/$(PROJECT)/$(TEST_FILE) ./projects/$(PROJECT)/; \
 	\
+	# Generate dashboard file for Grafana
+	python3 ./parser/parse_yaml_to_dashboard.py ./projects/$(PROJECT)/$(TEST_FILE) ./infra/grafana/template.json ./infra/grafana/dashboards/$(PROJECT).$(basename $(TEST_FILE)).json
+	\
 	# Run docker-compose
 	docker compose -f ./projects/$(PROJECT)/docker-compose.yml up -d; \
 	\
