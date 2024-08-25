@@ -45,7 +45,7 @@ run-test: ## Run a test defined by a specified YAML file
 	python3 ./parser/parse_yaml_to_test.py ./projects/$(PROJECT)/$(TEST_FILE) ./projects/$(PROJECT)/; \
 	\
 	# Generate dashboard file for Grafana
-	python3 ./parser/parse_yaml_to_dashboard.py ./projects/$(PROJECT)/$(TEST_FILE) ./infra/grafana/template.json ./infra/grafana/dashboards/$(PROJECT).$(basename $(TEST_FILE)).json
+	python3 ./parser/parse_yaml_to_dashboard.py ./projects/$(PROJECT)/$(TEST_FILE) ./infra/grafana/template.json
 	\
 	# Run docker-compose
 	docker compose -f ./projects/$(PROJECT)/docker-compose.yml up -d; \
@@ -75,3 +75,19 @@ ares-start: ## Start the infrastructure tools for Ares
 .PHONY: ares-stop
 ares-stop: ## Stop the infrastructure tools for Ares
 	docker compose -f./infra/docker-compose.yaml down
+
+.PHONY: create-dashboard
+create-dashboard: ## Create a new dashboard on Grafana
+	@if [ "$(PROJECT)" = "" ] || [ "$(TEST_FILE)" = "" ]; then \
+		echo "Usage: make create-dashboard PROJECT=<project_name> TEST_FILE=<test_name.yaml>"; \
+		exit 1; \
+	fi
+	echo "Creating dashboard for project: $(PROJECT) with test file: $(TEST_FILE)"; \
+	\
+	python3 ./parser/parse_yaml_to_dashboard.py ./projects/$(PROJECT)/$(TEST_FILE) ./infra/grafana/template.json; \
+	\
+	docker restart ares-infra-grafana
+	
+# Capture arguments passed to run-test
+create-dashboard-%:
+	@$(MAKE) create-dashboard PROJECT=$(word 2,$(MAKECMDGOALS)) TEST_FILE=$(word 3,$(MAKECMDGOALS))

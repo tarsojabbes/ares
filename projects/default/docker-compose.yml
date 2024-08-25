@@ -1,6 +1,6 @@
 services:
   microservice:
-    container_name: network-device-api
+    container_name: default.network-device-api
     cpus: 0.1
     depends_on: []
     deploy: {}

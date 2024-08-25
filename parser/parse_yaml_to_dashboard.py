@@ -18,12 +18,13 @@ def replace_placeholders(template_content, replacements):
             print(f"Placeholder {formatted_placeholder} not found in the template.")
     return template_content
 
-def main(yaml_file, template_file, output_file):
+def main(yaml_file, template_file):
     # Load the YAML file
     config = load_yaml(yaml_file)
     
-    # Extract the container_name
+    # Extract the container_name and project_name
     container_name = config.get('services', {}).get('microservice', {}).get('container_name', 'default_container_name')
+    project_name = config.get('project', 'default')
 
     # Load the template file
     with open(template_file, 'r') as file:
@@ -31,10 +32,11 @@ def main(yaml_file, template_file, output_file):
 
     # Replace placeholders in the template
     replacements = {
-        'ares_config.project.microservice_name': container_name
+        'ares_config.project.microservice_name': f'{project_name}.{container_name}'
     }
     updated_content = replace_placeholders(template_content, replacements)
     
+    output_file = f'./infra/grafana/dashboards/{project_name}.{container_name}.json'
     # Write the updated content to the output file
     with open(output_file, 'w') as file:
         file.write(updated_content)
@@ -45,7 +47,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Replace placeholders in a Grafana dashboard template with values from a YAML configuration.")
     parser.add_argument('yaml_file', type=str, help="Path to the YAML configuration file.")
     parser.add_argument('template_file', type=str, help="Path to the Grafana dashboard template file.")
-    parser.add_argument('output_file', type=str, help="Path to save the updated dashboard file.")
 
     args = parser.parse_args()
-    main(args.yaml_file, args.template_file, args.output_file)
+    main(args.yaml_file, args.template_file)

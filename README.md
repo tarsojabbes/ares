@@ -62,9 +62,28 @@ As said above, Ares is built on top of Open Source tools that are designed to co
 make ares-start
 ```
 
+This command will start cAdvisor (on `:8080`), Prometheus (on `:9090`) and Grafana (on `:3000`).
+
 ### Stopping Ares
 
 To stop all services, do: `make ares-stop`
+
+## Visualize your microservices resource usage with Grafana
+
+Ares comes with a built-in template that creates a dashboard on Grafana such that you can visualize the following aspects:
+
+- CPU Load Average for 10s
+- Filesystem - IO Current
+- Memory usage in Bytes
+- Network Received/Transmitted Bytes
+
+To create your own dashboard for your microservice, you may run
+
+```sh
+make create-dashboard PROJECT=<project_name> TEST_FILE=<test_name.yaml>
+```
+
+Now, you can access `localhost:3000`, and search for the dashboard `<project>.<container_name>`.
 
 ## Executing tests
 

@@ -1,7 +1,7 @@
 import yaml
 import argparse
 
-def map_service_config(service_name, service_info):
+def map_service_config(project_name, service_name, service_info):
     config = {
         'image': service_info.get('image', 'default_image'),
         'ports': service_info.get('ports', []),
@@ -13,13 +13,15 @@ def map_service_config(service_name, service_info):
         'depends_on': service_info.get('depends_on', []),
         'deploy': service_info.get('deploy', {}),
         'restart': service_info.get('restart', 'no'),
-        'container_name': service_info.get('container_name')
+        'container_name': f"{project_name}.{service_info.get('container_name', service_name)}"
     }
     return {service_name: {key: value for key, value in config.items() if value is not None}}
 
 def main(input_file, output_file):
     with open(input_file, 'r') as file:
         config = yaml.safe_load(file)
+
+    project_name = config.get('project', 'default')
 
     compose_data = {
         'version': '3',
@@ -28,7 +30,7 @@ def main(input_file, output_file):
 
     for service_name, service_info in config.get('services', {}).items():
         if service_name == 'microservice':
-            compose_data['services'].update(map_service_config(service_name, service_info))
+            compose_data['services'].update(map_service_config(project_name, service_name, service_info))
 
     volumes = config.get('volumes', [])
     networks = config.get('networks', [])
