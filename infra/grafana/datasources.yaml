@@ -6,7 +6,7 @@ datasources:
     uid: prometheus
     access: proxy
     orgId: 1
-    url: http://ares-infra-prometheus:9090
+    url: http://ares-infra-prometheus:3011
     basicAuth: false
     isDefault: false
     version: 1

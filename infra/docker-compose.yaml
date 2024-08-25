@@ -15,7 +15,7 @@ services:
       - /var/lib/docker/:/var/lib/docker:ro
       - /dev/disk/:/dev/disk:ro
     ports:
-      - "8080:8080"
+      - "3010:8080"
     networks:
       - ares-telemetry
   
@@ -27,7 +27,7 @@ services:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml
       - ares-prometheus-data:/prometheus
     ports:
-      - "9090:9090"
+      - "3011:9090"
     networks:
       - ares-telemetry
 
@@ -45,7 +45,7 @@ services:
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
     ports:
-      - "3000:3000"
+      - "3012:3000"
     networks:
       - ares-telemetry
 

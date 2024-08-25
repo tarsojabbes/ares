@@ -62,7 +62,7 @@ As said above, Ares is built on top of Open Source tools that are designed to co
 make ares-start
 ```
 
-This command will start cAdvisor (on `:8080`), Prometheus (on `:9090`) and Grafana (on `:3000`).
+This command will start cAdvisor (on `:3010`), Prometheus (on `:3011`) and Grafana (on `:3012`).
 
 ### Stopping Ares
 
@@ -83,7 +83,7 @@ To create your own dashboard for your microservice, you may run
 make create-dashboard PROJECT=<project_name> TEST_FILE=<test_name.yaml>
 ```
 
-Now, you can access `localhost:3000`, and search for the dashboard `<project>.<container_name>`.
+Now, you can access `localhost:3012`, and search for the dashboard `<project>.<container_name>`.
 
 ## Executing tests
 
