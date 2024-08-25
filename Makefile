@@ -50,6 +50,7 @@ run-test: ## Run a test defined by a specified YAML file
 	# Run docker-compose
 	docker compose -f ./projects/$(PROJECT)/docker-compose.yml up -d; \
 	\
+	docker restart ares-infra-grafana; \
 	TEST_FILES="./projects/$(PROJECT)/generated_tests/$(basename $(TEST_FILE))/*.generated.js"; \
 	for test_file in $$TEST_FILES; do \
 		if [ ! -f $$test_file ]; then \
@@ -67,10 +68,10 @@ run-test: ## Run a test defined by a specified YAML file
 run-test-%:
 	@$(MAKE) run-test PROJECT=$(word 2,$(MAKECMDGOALS)) TEST_FILE=$(word 3,$(MAKECMDGOALS))
 
-.PHONY: ares start
-ares start: ## Start the infrastructure tools for Ares
+.PHONY: ares-start
+ares-start: ## Start the infrastructure tools for Ares
 	docker compose -f./infra/docker-compose.yaml up -d
 
-.PHONY: ares stop
-ares stop: ## Stop the infrastructure tools for Ares
+.PHONY: ares-stop
+ares-stop: ## Stop the infrastructure tools for Ares
 	docker compose -f./infra/docker-compose.yaml down

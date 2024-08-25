@@ -59,12 +59,12 @@ As a good practice, we recommend that you prepend your test name with the protoc
 As said above, Ares is built on top of Open Source tools that are designed to collect, aggregate and display data. So, for you to visualize your microservice behavior, you need to get this infrastructure up and running, by simply running:
 
 ```sh
-make ares start
+make ares-start
 ```
 
 ### Stopping Ares
 
-To stop all services, do: `make ares stop`
+To stop all services, do: `make ares-stop`
 
 ## Executing tests
 
