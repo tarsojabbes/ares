@@ -455,7 +455,7 @@
     "timepicker": {},
     "timezone": "browser",
     "title": "{{ ares_config.project.microservice_name }}",
-    "uid": "advg2je0dt91cb",
+    "uid": "",
     "version": 3,
     "weekStart": ""
   }
