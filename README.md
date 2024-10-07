@@ -1,100 +1,123 @@
-# Ares Framework
+Aqui está a versão aprimorada do seu README com emojis e alguns ajustes para torná-lo mais claro e atrativo:
 
-Ares is a framework to make Load and Stress Testing easy for all developers. It's built with Open Source tools to facilitate to track behaviour of your Web microservices resource usage under common and high workload scenarios.
+---
 
-Ares is meant to be a Git repository, as a truth source to keep all your tests, as we want your team to be able to collaborate in a single place with a version control tool that every engineer understands.
+# ⚡ Ares Framework
 
-## Dependencies
-- Docker
-- Python
+**Ares** is a framework designed to make Load and Stress Testing easy for all developers. Built with Open Source tools, Ares helps you track the behavior of your microservices' resource usage under both common and high workload scenarios.
 
-## Services
+Ares is designed to be a Git repository, serving as the single source of truth for all your tests. This allows your team to collaborate easily using a version control tool that every engineer is familiar with. 🎯
 
-Ares is a collection of Open Source tools used by Site Reliability Engineers to address the basic data collection and display for services. Our framework uses the following tools:
+## 🛠️ Dependencies
 
-- [cAdvisor](https://github.com/google/cadvisor)
-- Prometheus
-- Grafana
+- **Docker**
+- **Python**
 
-## Test Types
+## 🧰 Services
 
-Ares comes with 3 built-in types of tests for you to use:
+Ares is a collection of Open Source tools commonly used by Site Reliability Engineers for data collection and visualization of service behavior. Our framework leverages the following tools:
 
-1. Gradual Ramp Up, to simulate a common workload for your microservice
+- [cAdvisor](https://github.com/google/cadvisor) 🐳
+- Prometheus 📊
+- Grafana 📉
 
-2. Spike Load, to simulate a spike workload
+## 🚀 Test Types
 
-3. Sustained High Load, to simulate a scenario of high workload under a period of time
+Ares includes three built-in test types designed to simulate different workload scenarios for microservices:
 
-These three types of test were designed to perform case scenarios for microservices that communicate with HTTP or gRPC.
+1. **Gradual Ramp Up** — Simulates a normal workload increase for your microservice.
+2. **Spike Load** — Simulates a sudden spike in traffic.
+3. **Sustained High Load** — Simulates a prolonged high workload over a period of time.
 
-### Custom Tests
+These tests are specifically tailored for microservices that communicate using HTTP or gRPC protocols.
 
-Under the hood, each test perfomed by Ares is a [k6](https://k6.io/) test, therefore you can create your own kind of test that fits your needs.
+### 🔧 Custom Tests
 
-#### Creating your own tests
+Under the hood, Ares uses [k6](https://k6.io/) for testing, which means you can create your own custom tests based on your specific needs.
 
-In order to create your own test, you may use `make`
+#### Creating Your Own Tests
 
-1. Create a custom test directory for your project
+To create custom tests, simply use `make`:
 
-```sh
-make create-test-directory <project_name>
-```
+1. **Create a test directory for your project:**
+   ```sh
+   make create-test-directory <project_name>
+   ```
 
-2. Create your test file
+2. **Create your test file:**
+   ```sh
+   make create-test-file <project_name> <protocol>.<test_name>.js
+   ```
 
-```sh
-make create-test-file <project_name> <protocol>.<test_name>.js
-```
+This will generate a basic k6 test template that you can modify. Note that the created file is a template, not the actual test to be executed. This allows engineers to define test parameters using a YAML file.
 
-This will create a basic template for a k6 test that you can edit. The created file will not be the test itself to be executed, rather it's a template that will be used and parsed to generate the real test. This is because we offer engineers the option to declare in a YAML file what will be the test parameters.
+For example, if you check `tests/default/http.gradualRampUp.js`, you’ll see `{{ares_config.<parameter>}}` placeholders throughout the file. These placeholders will be replaced by values defined in the corresponding YAML file, such as `projects/default/example-test.yaml`.
 
-For example, if you access `tests/default/http.gradualRampUp.js` you'll see that the file is not a common Javascript file, once it has `{{ares_config.<parameter>}}` all over the test code. The values for these parameters are set in a corresponding YAML file that describe the test, in this case, `projects/default/example-test.yaml`, under `tests.default/http.gradual_ramp_up`.
+> **Tip:** As a best practice, we recommend prepending your test name with the protocol you are using (e.g., HTTP or gRPC).
 
-As a good practice, we recommend that you prepend your test name with the protocol you're using (HTTP or gRPC).
+## 🚢 Starting Ares
 
-## Starting Ares
-
-As said above, Ares is built on top of Open Source tools that are designed to collect, aggregate and display data. So, for you to visualize your microservice behavior, you need to get this infrastructure up and running, by simply running:
+Ares runs on top of several Open Source tools designed to collect and display data. To start the infrastructure:
 
 ```sh
 make ares-start
 ```
 
-This command will start cAdvisor (on `:3010`), Prometheus (on `:3011`) and Grafana (on `:3012`).
+This will spin up:
+- cAdvisor at `localhost:3010`
+- Prometheus at `localhost:3011`
+- Grafana at `localhost:3012`
 
-### Stopping Ares
+### 🛑 Stopping Ares
 
-To stop all services, do: `make ares-stop`
+To stop all services, simply run:
 
-## Visualize your microservices resource usage with Grafana
+```sh
+make ares-stop
+```
 
-Ares comes with a built-in template that creates a dashboard on Grafana such that you can visualize the following aspects:
+## 📊 Visualizing Microservice Resource Usage with Grafana
 
-- CPU Load Average for 10s
+Ares includes a pre-built Grafana dashboard template that helps visualize key resource usage metrics, including:
+
+- CPU Load Average (10s)
 - Filesystem - IO Current
-- Memory usage in Bytes
-- Network Received/Transmitted Bytes
+- Memory Usage (Bytes)
+- Network Received/Transmitted (Bytes)
 
-To create your own dashboard for your microservice, you may run
+To create your own dashboard for a specific microservice, run:
 
 ```sh
 make create-dashboard PROJECT=<project_name> TEST_FILE=<test_name.yaml>
 ```
 
-Now, you can access `localhost:3012`, and search for the dashboard `<project>.<container_name>`.
+You can then access your dashboard at `localhost:3012` and search for the dashboard named `<project>.<container_name>`.
 
-## Executing tests
+## 🧪 Running Tests
 
-Each test execution is defined by an YAML configuration file, where you declare what tests will be executed and other possible options. You can find an example at `projects/default/example-test.yaml`
+Each test execution is defined by a YAML configuration file, where you specify the tests to be run and other relevant options. You can find an example in `projects/default/example-test.yaml`.
 
-1. Run your test file
+1. **Run your test file:**
 
 ```sh
 make run-test PROJECT=<project_name> TEST_FILE=<test_name.yaml>
 ```
 
-Running your tests mean that we parse your YAML file to a `docker-compose.yaml` that gets your microservice up and running, and we also create a folder `projects/<project_name>/generated_tests/<test_file>` that will contain all tests generated with the values you informed in your test declaration file.
+This command will:
+- Parse the YAML file to generate a `docker-compose.yaml` file to bring up your microservice.
+- Create a folder `projects/<project_name>/generated_tests/<test_file>` containing all the generated tests.
 
-You can check this under `projects/default/generated_tests/example-test` and look for `http.gradualRampUp.generated.js` and `http.spikeLoad.generated.js`. Now, these are the tests we will perform!
+You can then check the `projects/<project_name>/generated_tests/` folder to find the generated test files, such as `http.gradualRampUp.generated.js` and `http.spikeLoad.generated.js`.
+
+Now, these are the actual tests that will be executed! 🚀
+
+---
+
+### 📄 Example Structure:
+
+- `projects/default/example-test.yaml` ➡️ Declares your test parameters.
+- `projects/default/generated_tests/http.gradualRampUp.generated.js` ➡️ Generated test ready to run.
+
+---
+
+Feel free to explore and customize Ares to suit your team's needs.
