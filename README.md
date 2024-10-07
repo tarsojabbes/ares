@@ -1,7 +1,3 @@
-Aqui está a versão aprimorada do seu README com emojis e alguns ajustes para torná-lo mais claro e atrativo:
-
----
-
 # ⚡ Ares Framework
 
 **Ares** is a framework designed to make Load and Stress Testing easy for all developers. Built with Open Source tools, Ares helps you track the behavior of your microservices' resource usage under both common and high workload scenarios.
