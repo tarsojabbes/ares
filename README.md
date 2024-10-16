@@ -1,21 +1,23 @@
 # ⚡ Ares Framework
 
-**Ares** is a framework designed to make Load and Stress Testing easy for all developers. Built with Open Source tools, Ares helps you track the behavior of your microservices' resource usage under both common and high workload scenarios.
-
-Ares is designed to be a Git repository, serving as the single source of truth for all your tests. This allows your team to collaborate easily using a version control tool that every engineer is familiar with. 🎯
+**Ares** is a framework designed to make Load and Stress Testing easy for all developers. Built with Open Source tools, Ares helps you track the behavior of your microservices' resource usage under both common and high workload scenarios. We designed it to be a Git repository, serving as the single source of truth for all your tests. This allows your team to collaborate easily using a version control tool that every engineer is familiar with.
 
 ## 🛠️ Dependencies
 
-- **Docker**
-- **Python**
+- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) 
+- [Python](https://www.python.org/)
+- [k6](https://k6.io/)
 
 ## 🧰 Services
 
 Ares is a collection of Open Source tools commonly used by Site Reliability Engineers for data collection and visualization of service behavior. Our framework leverages the following tools:
 
-- [cAdvisor](https://github.com/google/cadvisor) 🐳
-- Prometheus 📊
-- Grafana 📉
+- [cAdvisor](https://github.com/google/cadvisor)
+- [Prometheus](https://prometheus.io/)
+- [Grafana](https://grafana.com/)
+- [k6](https://k6.io/)
+
+Theses choices reflects our interest in making Ares a highly customizable tool that can fit every company's needs, as long as your engineering team understands our underlying components.
 
 ## 🚀 Test Types
 
